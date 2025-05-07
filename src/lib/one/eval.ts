@@ -26,9 +26,15 @@ import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor
 import { Memory } from './state';
 import { Label } from './label';
 import { checkType, type CourantLabeledValue, type CourantValue } from './types';
-import { CourantIllegalInformationFlow, CourantUnknownIdentifierError } from './error';
+import {
+	CourantIllegalInformationFlow,
+	CourantIllegalReturn,
+	CourantUncaughtValue,
+	CourantUnknownIdentifierError
+} from './error';
 import { CourantClosure } from './closure';
-import { ProgramContext as Context } from './ProgramContext';
+import { ProgramContext as Context } from './programcontext';
+import { CourantErrorListener } from './errorlistener';
 
 type BinOp = (left: CourantValue, right: CourantValue) => CourantValue;
 type UnaryOP = (val: CourantValue) => CourantValue;
@@ -66,9 +72,19 @@ export class EvalVisitor extends AbstractParseTreeVisitor<any> implements Couran
 
 	protected defaultResult() {}
 
-	visitProgram(ctx: ProgContext) {
-		for (const stmt of ctx.stmt()) {
-			this.visit(stmt);
+	visitProg(ctx: ProgContext) {
+		try {
+			for (const stmt of ctx.stmt()) {
+				this.visit(stmt);
+			}
+		} catch (e) {
+			if (e instanceof InternalThrow) {
+				throw new CourantUncaughtValue();
+			} else if (e instanceof InternalReturn) {
+				throw new CourantIllegalReturn();
+			} else {
+				throw e;
+			}
 		}
 	}
 
@@ -516,14 +532,23 @@ export class EvalVisitor extends AbstractParseTreeVisitor<any> implements Couran
 }
 
 export function run(input: string): Memory {
-	const chars = CharStreams.fromString(input); // replace this with a FileStream as required
+	const chars = CharStreams.fromString(input);
+
 	const lexer = new CourantLexer(chars);
+	// Change error lisneter to custom error listener
+	lexer.removeErrorListeners();
+	lexer.addErrorListener(new CourantErrorListener());
+
 	const tokens = new CommonTokenStream(lexer);
+
 	const parser = new CourantParser(tokens);
+	// Change error lisneter to custom error listener
+	parser.removeErrorListeners();
+	parser.addErrorListener(new CourantErrorListener());
+
 	const tree = parser.prog();
-	if (parser.numberOfSyntaxErrors != 0) {
-		throw new Error('Parsing error');
-	}
+	// We knwo that that parsinc succeeded as an error would have thrown out of the funciton
+	// due to the custom listener
 	const visitor = new EvalVisitor(
 		new Memory(),
 		new Context([Label.bottom()]),
@@ -533,6 +558,8 @@ export function run(input: string): Memory {
 	visitor.visit(tree);
 	return visitor.memory;
 }
+
+// console.log(run("a := 1;"));
 
 // try {
 //   // console.dir(test(`

@@ -5,7 +5,8 @@
 
 	let { currentChallenge, challenges } = $props();
 
-	const progress = $progressStore;
+	const progress = $derived($progressStore);
+	progressStore.subscribe((val) => console.log(val));
 </script>
 
 <div class="flex flex-col items-start gap-2 px-2 py-5">
@@ -18,12 +19,14 @@
 				{/if}
 			</Button>
 		{:else if progress.includes(challenge)}
-			<Button variant="link" class="text-green-400" href={"/challenges/"+challenge}>
+			<Button variant="link" class="text-green-400" href={'/challenges/' + challenge}>
 				Challenge {challenge}
 				<Check />
 			</Button>
 		{:else}
-			<a class={buttonVariants({ variant: 'link' })} href={"/challenges/"+challenge}>Challenge {challenge}</a>
+			<a class={buttonVariants({ variant: 'link' })} href={'/challenges/' + challenge}
+				>Challenge {challenge}</a
+			>
 		{/if}
 	{/each}
 </div>

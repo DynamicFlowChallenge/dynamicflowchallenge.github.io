@@ -5,14 +5,20 @@
 	import { Prec } from '@codemirror/state';
 	import { javascript } from '@codemirror/lang-javascript';
 	import * as Resizable from '$lib/components/ui/resizable';
-	import { Button } from '$lib/components/ui/button';
+	import { Button, Root } from '$lib/components/ui/button';
 	import { mode } from 'mode-watcher';
 	import ChallengeList from '$lib/components/ChallengeList.svelte';
 	import dracula from '$lib/dracula';
 	import Spinner from './icons/Spinner.svelte';
 	import Play from './icons/Play.svelte';
+	import type { WorkerMessage } from '$lib/workermessage';
+	import { progressStore } from '$lib/progressStore';
+	import * as Dialog from '$lib/components/ui/dialog';
+	import { challenges } from '$lib/challenges';
 
-	let { currentChallenge, challenges, WorkerClass, children } = $props();
+	let { currentChallenge, WorkerClass, children, nextChallenge } = $props();
+
+	let dialogOpen = $state(false);
 
 	let theme = $state(dracula);
 	mode.subscribe((mode) => {
@@ -24,25 +30,34 @@
 	});
 	// = derived(mode, (mode) => { mode === 'dark' ? dracula : ayuLight})
 
+	let errorMessage = $state('');
+
 	let value = $state('');
 	let processing = $state(false);
 
-	const onSubmit = (): Promise<string> => {
+	const onSubmit = (): Promise<WorkerMessage> => {
 		processing = true;
+		errorMessage = '';
 		const myWorker = new WorkerClass();
 		myWorker.postMessage(value);
 		return new Promise((resolve, reject) => {
-			setTimeout(() => {
+			const timeout = setTimeout(() => {
 				myWorker.terminate();
 				processing = false;
+				errorMessage = 'Execution took too long: program killed after 10 seconds';
 				reject();
 			}, 10000);
-			myWorker.onmessage = (msg: MessageEvent<string>) => {
-				console.log('Message : ' + msg.data);
+			myWorker.onmessage = (msg: MessageEvent<WorkerMessage>) => {
+				if (msg.data.type === 'error') {
+					errorMessage = msg.data.message;
+				} else {
+					progressStore.completeChallenge(currentChallenge);
+					dialogOpen = true;
+				}
 				resolve(msg.data);
+				clearTimeout(timeout);
 				processing = false;
 				myWorker.terminate();
-				return;
 			};
 		});
 	};
@@ -62,6 +77,16 @@
 	);
 </script>
 
+<Dialog.Root bind:open={dialogOpen}>
+	<Dialog.Content>
+		<Dialog.Title>Challenge completed !</Dialog.Title>
+		<Dialog.Description>Well done, you completed this challenge</Dialog.Description>
+		<div class="flex justify-end gap-10">
+			<Dialog.Close class="cursor-pointer">Stay</Dialog.Close>
+			<Button href={`/challenges/${nextChallenge}`}>Next challenge</Button>
+		</div>
+	</Dialog.Content>
+</Dialog.Root>
 <Resizable.PaneGroup class="h-full" direction="horizontal">
 	<Resizable.Pane defaultSize={12}>
 		<ChallengeList {challenges} {currentChallenge} />
@@ -103,7 +128,12 @@
 						</Button>
 					{/if}
 				</div>
-				<div class="border-border text-primary border-t p-5">Results</div>
+				<div class="border-border text-primary border-t p-5">
+					<h1 class="mb-5 text-xl font-bold">Results</h1>
+					<p>
+						{errorMessage}
+					</p>
+				</div>
 			</Resizable.Pane>
 		</Resizable.PaneGroup>
 	</Resizable.Pane>

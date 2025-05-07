@@ -1,22 +1,23 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui/button';
-	import { progressStore } from '$lib/progressStore';
+	import { Button, buttonVariants } from '$lib/components/ui/button';
+	import {
+		firstChallengeNotCompleted,
+		hasChallengesProgress,
+		progressStore
+	} from '$lib/progressStore';
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
+	import * as Dialog from '$lib/components/ui/dialog';
 
 	console.log(page.url.hash);
-
-	
-
-	let progress = $progressStore;
 
 	let aboutOpen = $state(false);
 
 	onMount(() => {
-		const anchor = document.getElementById("top");
+		const anchor = document.getElementById('top');
 		anchor?.scrollIntoView();
-	})
-	
+	});
+
 	function smoothScroll(event: Event) {
 		aboutOpen = !aboutOpen;
 		event.preventDefault();
@@ -39,10 +40,35 @@
 			{:else}
 				<Button href="#about" variant="outline" onclick={smoothScroll}>About</Button>
 			{/if}
-			<Button href="challenges/one">Start</Button>
+			<Button href={`challenges/${$firstChallengeNotCompleted}`}>
+				{#if $hasChallengesProgress}
+					Continue
+				{:else}
+					Start
+				{/if}
+			</Button>
 		</div>
+		{#if $hasChallengesProgress}
+			<Dialog.Root>
+				<Dialog.Trigger class={[buttonVariants({ variant: 'ghost' }), 'cursor-pointer']}
+					>Reset Progression</Dialog.Trigger
+				>
+				<Dialog.Content>
+					<Dialog.Title>Are you sure ?</Dialog.Title>
+					<Dialog.Description>You will loose all your progress</Dialog.Description>
+					<div class="flex justify-end gap-10">
+						<Dialog.Close class="cursor-pointer">Cancel</Dialog.Close>
+						<Button
+							onclick={() => progressStore.reset()}
+							variant="destructive"
+							class="cursor-pointer">Yes</Button
+						>
+					</div>
+				</Dialog.Content>
+			</Dialog.Root>
+		{/if}
 	</div>
-	<div class="borber-border h-full w-full overflow-y-auto border-l overflow-y-hidden">
+	<div class="borber-border h-full w-full overflow-y-auto overflow-y-hidden border-l">
 		<div id="top" class="noise h-full w-full"></div>
 		<div id="about" class="flex flex-col gap-5 p-20">
 			<h1 class="text-xl font-bold">About</h1>
@@ -58,8 +84,14 @@
 				encouraged to do the challenges in order for the best experience.
 			</p>
 			<div class="mt-5 flex gap-3">
-			<Button class="w-fit" href="challenges/one">Let's start !</Button>
-			<Button href="#top" variant="outline" onclick={smoothScroll}>Back</Button>
+				<Button class="w-fit" href={`challenges/${$firstChallengeNotCompleted}`}>
+					{#if $hasChallengesProgress}
+						Continue
+					{:else}
+						Start
+					{/if}
+				</Button>
+				<Button href="#top" variant="outline" onclick={smoothScroll}>Back</Button>
 			</div>
 		</div>
 	</div>

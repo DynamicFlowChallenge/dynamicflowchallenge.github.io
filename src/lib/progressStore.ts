@@ -1,9 +1,10 @@
-import { writable } from 'svelte/store';
+import { derived, get, writable } from 'svelte/store';
+import { challenges } from './challenges';
 
 // Define a key for localStorage
 const PROGRESS_KEY = 'challengeProgress';
 
-function getInitialProgress() {
+function getInitialProgress(): string[] {
 	if (typeof window !== 'undefined') {
 		const storedProgress = window.localStorage.getItem(PROGRESS_KEY);
 		return storedProgress ? JSON.parse(storedProgress) : [];
@@ -11,29 +12,44 @@ function getInitialProgress() {
 
 	return [];
 }
+const store = writable(getInitialProgress());
 
 function createProgressStore() {
-	const { subscribe, set, update } = writable(getInitialProgress());
 	return {
-		subscribe,
+		subscribe: store.subscribe,
 		completeChallenge: (challenge: string) => {
-			update((current) => {
-				const newProgress = [...current, challenge];
-				window.localStorage.setItem(PROGRESS_KEY, JSON.stringify(newProgress));
-				set(newProgress);
-				return newProgress;
+			store.update((current) => {
+				if (!current.includes(challenge)) {
+					const newProgress = [...current, challenge];
+					window.localStorage.setItem(PROGRESS_KEY, JSON.stringify(newProgress));
+					return newProgress;
+				}
+				return current;
 			});
 		},
 		reset: () => {
 			window.localStorage.removeItem(PROGRESS_KEY);
-			set([]);
+			store.set([]);
 		},
 		setProgress: (progress: string[]) => {
 			// Useful for debugging or progress set manually
 			window.localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
-			set(progress);
+			store.set(progress);
 		}
 	};
 }
+
+export const firstChallengeNotCompleted = derived(store, ($store) => {
+	for (const challenge of challenges) {
+		if (!$store.includes(challenge)) {
+			return challenge;
+		}
+	}
+	return 'win';
+});
+
+export const hasChallengesProgress = derived(store, ($store) => {
+	return $store.length != 0;
+});
 
 export const progressStore = createProgressStore();

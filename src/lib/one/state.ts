@@ -1,4 +1,3 @@
-import { Label } from './label';
 import type { CourantLabeledValue } from './types';
 
 export class Memory {
