@@ -20,6 +20,7 @@
 		"@sveltejs/kit": "^2.16.0",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
 		"@tailwindcss/vite": "^4.0.0",
+		"@vite-pwa/sveltekit": "^1.0.0",
 		"antlr4ts-cli": "^0.5.0-alpha.4",
 		"bits-ui": "^0.22.0",
 		"clsx": "^2.1.1",

@@ -9,8 +9,6 @@
 	import { page } from '$app/state';
 	import * as Dialog from '$lib/components/ui/dialog';
 
-	console.log(page.url.hash);
-
 	let aboutOpen = $state(false);
 
 	onMount(() => {
@@ -22,7 +20,7 @@
 		aboutOpen = !aboutOpen;
 		event.preventDefault();
 		const link = event.currentTarget;
-		const anchorId = new URL(link.href!).hash.replace('#', '');
+		const anchorId = new URL(link.href).hash.replace('#', '');
 		const anchor = document.getElementById(anchorId);
 		anchor?.scrollIntoView({
 			// top: anchor.offsextTop,
@@ -83,6 +81,7 @@
 				You'll be indroduced to different features as you advance in the challenges so you are
 				encouraged to do the challenges in order for the best experience.
 			</p>
+			<p>This app also works offline.</p>
 			<div class="mt-5 flex gap-3">
 				<Button class="w-fit" href={`challenges/${$firstChallengeNotCompleted}`}>
 					{#if $hasChallengesProgress}
