@@ -10,9 +10,12 @@ export default defineConfig({
 		sveltekit(),
 		nodePolyfills(),
 		SvelteKitPWA({
-			strategies: 'generateSW', // You can also use 'injectManifest' if you want more control
-			registerType: 'autoUpdate', // Automatically update service worker
-			includeAssets: ['favicon.png']
+			strategies: 'generateSW',
+			registerType: 'autoUpdate',
+			includeAssets: ['favicon.png'],
+			kit: {
+				trailingSlash: 'always'
+			}
 		})
 	],
 	optimizeDeps: {
