@@ -5,7 +5,7 @@
 	import { Prec } from '@codemirror/state';
 	import { javascript } from '@codemirror/lang-javascript';
 	import * as Resizable from '$lib/components/ui/resizable';
-	import { Button, Root } from '$lib/components/ui/button';
+	import { Button } from '$lib/components/ui/button';
 	import { mode } from 'mode-watcher';
 	import ChallengeList from '$lib/components/ChallengeList.svelte';
 	import dracula from '$lib/dracula';
@@ -28,7 +28,6 @@
 			theme = ayuLight;
 		}
 	});
-	// = derived(mode, (mode) => { mode === 'dark' ? dracula : ayuLight})
 
 	let errorMessage = $state('');
 
@@ -106,6 +105,9 @@
 								width: '100%',
 								height: '100%'
 							}
+						}}
+						on:ready={(e) => {
+							e.detail.focus();
 						}}
 					/>
 				</div>
