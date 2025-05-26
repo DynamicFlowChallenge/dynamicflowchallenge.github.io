@@ -9,7 +9,7 @@ export function evaluate(code: string): WorkerMessage {
 		const mem = new Memory();
 		const expectedValue = i % 2 ? true : false;
 		mem.setValue('h', {
-			label: Label.bottom(),
+			label: Label.top(),
 			value: { type: 'boolean', value: expectedValue }
 		});
 		try {
@@ -17,6 +17,9 @@ export function evaluate(code: string): WorkerMessage {
 			const l = mem.getValue('l');
 			if (l === undefined) {
 				return { type: 'error', message: `No value for 'l' at run ${i + 1}/20` };
+			}
+			if (!l.label.securityOrdering(Label.bottom())) {
+				return { type: 'error', message: `'l' has label ${l.label.val} at run ${i + 1}/20, should have label low` };
 			}
 			if (l.value.type != 'boolean') {
 				return {

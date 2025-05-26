@@ -29,7 +29,7 @@
 
 	<h3 class="py-5 font-bold">Language grammar</h3>
 
-	<pre class="mb-5 overflow-x-auto text-sm bg-secondary rounded-sm p-3">{`<prog> ::= <stmts>
+	<pre class="bg-secondary mb-5 overflow-x-auto rounded-sm p-3 text-sm">{`<prog> ::= <stmts>
 <stmts> ::= <stmt> <stmts> | {empty}
 <stmt> ::= <ident> = <expr> ;               (assignment)
 		| <expr> ;                          (evaluate expression)
