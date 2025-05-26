@@ -1,5 +1,5 @@
 <script lang="ts">
-	import MyWorker from '../../../test.worker?worker';
+	import MyWorker from '$lib/one/worker?worker';
 	import Challenge from '$lib/components/Challenge.svelte';
 </script>
 

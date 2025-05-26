@@ -141,7 +141,7 @@
 	</Resizable.Pane>
 	<Resizable.Handle />
 	<Resizable.Pane>
-		<div class="border-border text-primary w-full border-l p-10">
+		<div class="border-border text-primary h-full w-full overflow-auto border-l p-10">
 			{@render children()}
 		</div>
 	</Resizable.Pane>

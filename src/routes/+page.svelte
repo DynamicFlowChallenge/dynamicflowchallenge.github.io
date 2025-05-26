@@ -75,7 +75,7 @@
 				You'll be presented with different challenges to try to leak information. The challenges use
 				a custom language named Courant. Its is a dynamically types language that implemen,ts a
 				runtime dynamic control flow monitor to prevent illegal information flows. The language has
-				a syntax similar to JavaScript with a fex differences.
+				a syntax similar to JavaScript with a few differences.
 			</p>
 			<p>
 				You'll be indroduced to different features as you advance in the challenges so you are
