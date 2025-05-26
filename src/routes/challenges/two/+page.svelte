@@ -28,7 +28,10 @@
 
 	<h3 class="py-5 font-bold">Monitor rules</h3>
 
-	<p>When assigning a value to a variable, the security label of the variable becomes the same as the security label of the value.</p>
+	<p>
+		When assigning a value to a variable, the security label of the variable becomes the same as the
+		security label of the value.
+	</p>
 	<p>
 		Literal values like <code class="bg-secondary rounded-sm px-2">true</code> always have label
 		<code class="bg-secondary rounded-sm px-2">low</code>.
