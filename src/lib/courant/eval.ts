@@ -277,7 +277,7 @@ export class EvalVisitor extends AbstractParseTreeVisitor<any> implements Couran
 			// Not operator
 			op = (val) => {
 				checkType(val, 'boolean');
-				return { type: val.type, value: !val };
+				return { type: val.type, value: !val.value };
 			};
 		}
 		let val: CourantLabeledValue = this.visit(ctx.expr());
@@ -558,51 +558,3 @@ export function run(input: string): Memory {
 	visitor.visit(tree);
 	return visitor.memory;
 }
-
-// console.log(run("a := 1;"));
-
-// try {
-//   // console.dir(test(`
-//   // a := 0;
-//   // b := 2;
-//   // c := -.5;
-//   // # this should be ignored
-//   // if a + 2 then c:=1 else d:=2
-//   // `), {depth: null});
-//   console.dir(
-//     run(`
-//   # b := () => {d:=7};
-//   # a := 3;
-//   # c := b();
-//   # fib := (n) => {
-//   #   if n<=1 then {
-//   #     return n
-//   #   } else {
-//   #     return fib(n-1)+fib(n-2)
-//   #   }
-//   # };
-//   # a := fib(25)
-//   # a := () => {return 1}
-//   # b := 0;
-//   # try {
-//   #   a := () => {
-//   #     throw 3
-//   #   };
-//   #   c := a()
-//   # } catch ( e ) {
-//   #   b := e
-//   # }
-//   # a := true = false
-//   # a := a + 1;
-//   # this should be ignored
-//   # while a!=0 do {b:= b+1; a:= a+ -1}
-//   `),
-//     { depth: 5 },
-//   );
-// } catch (e) {
-//   if (e instanceof WhileError) {
-//     console.error("Error while processing program :\n", e.message);
-//   } else if (e instanceof InternalReturn) {
-//     console.error("While runtime error : return outside of a function");
-//   }
-// }
