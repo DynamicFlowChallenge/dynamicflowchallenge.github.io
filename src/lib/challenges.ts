@@ -1,1 +1,1 @@
-export const challenges = ['one', 'two', 'three', 'four'];
+export const challenges = ['one', 'two', 'three', 'four', 'five'];

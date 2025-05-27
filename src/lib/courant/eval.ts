@@ -39,14 +39,14 @@ import { CourantErrorListener } from './errorlistener';
 type BinOp = (left: CourantValue, right: CourantValue) => CourantValue;
 type UnaryOP = (val: CourantValue) => CourantValue;
 
-class InternalReturn {
+export class InternalReturn {
 	value: CourantLabeledValue;
 	constructor(value: CourantLabeledValue) {
 		this.value = value;
 	}
 }
 
-class InternalThrow {
+export class InternalThrow {
 	value: CourantLabeledValue;
 	pc: Label;
 	constructor(value: CourantLabeledValue, pc: Label) {
