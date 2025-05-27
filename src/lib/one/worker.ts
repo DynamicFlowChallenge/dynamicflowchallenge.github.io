@@ -42,7 +42,5 @@ export function evaluate(code: string): WorkerMessage {
 }
 
 self.onmessage = (event: MessageEvent<string>) => {
-	debugger;
-	console.log('oui');
 	self.postMessage(evaluate(event.data));
 };

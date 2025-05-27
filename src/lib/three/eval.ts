@@ -52,10 +52,6 @@ export class EvalVisitor extends defaultEval.EvalVisitor {
 		throw new Error('functions not authorized yet');
 	}
 
-	visitParensExpr(ctx: ParensExprContext): CourantLabeledValue {
-		return this.visit(ctx.expr());
-	}
-
 	visitFunctionCallExpr(ctx: FunctionCallExprContext): CourantLabeledValue {
 		throw new Error('functions not authorized yet');
 	}

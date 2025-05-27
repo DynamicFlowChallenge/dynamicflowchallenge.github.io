@@ -3,7 +3,7 @@
 	import Challenge from '$lib/components/Challenge.svelte';
 </script>
 
-<Challenge currentChallenge="three" nextChallenge="win" WorkerClass={Worker}>
+<Challenge currentChallenge="three" nextChallenge="four" WorkerClass={Worker}>
 	<h1 class="py-3 text-xl font-bold">Challenge 3</h1>
 
 	<h3 class="py-5 font-bold">Goal</h3>

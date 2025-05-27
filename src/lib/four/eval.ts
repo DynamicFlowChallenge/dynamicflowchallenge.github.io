@@ -1,7 +1,6 @@
 import {
+	AssignmentContext,
 	CourantParser,
-	IfStmtContext,
-	WhileStmtContext,
 	type FunctionBodyContext,
 	type FunctionCallExprContext,
 	type FunctionDeclExprContext,
@@ -22,30 +21,34 @@ import { ProgramContext } from '$lib/courant/programcontext';
 
 // Custom visitor to evaluate program
 export class EvalVisitor extends defaultEval.EvalVisitor {
-	visitIfStmt(ctx: IfStmtContext) {
-		const labeledRes: CourantLabeledValue = this.visit(ctx.expr());
-		const res = labeledRes.value;
-
-		checkType(res, 'boolean');
-		if (res.value) {
-			this.visit(ctx.stmt(0));
-		} else if (ctx.stmt().length == 2) {
-			this.visit(ctx.stmt(1));
+	visitFunctionBody(ctx: FunctionBodyContext): CourantLabeledValue {
+		let val: CourantLabeledValue;
+		let expr = ctx.expr();
+		if (expr != undefined) {
+			val = this.visit(expr);
+		} else {
+			throw new Error('functions body cannot be a block');
 		}
+		val = val!; // Force because we know that val will always have a value
+		// Returning inside a pc should return a value of label > pc
+		let newLabel = this.pc.currentContext.union(val.label);
+		let newValue = {
+			label: newLabel,
+			value: val.value
+		};
+		return newValue!;
 	}
 
-	visitWhileStmt(ctx: WhileStmtContext) {
-		let labeledRes: CourantLabeledValue = this.visit(ctx.expr());
-		let res = labeledRes.value;
-		checkType(res, 'boolean');
-		while (res.value) {
-			this.visit(ctx.stmt());
-
-			// Condition check
-			labeledRes = this.visit(ctx.expr());
-			res = labeledRes.value;
-			checkType(res, 'boolean');
+	visitFunctionCallExpr(ctx: FunctionCallExprContext): CourantLabeledValue {
+		let fn: CourantLabeledValue = this.visit(ctx.expr(0));
+		checkType(fn.value, 'function');
+		let params: CourantLabeledValue[] = [];
+		for (let i = 1; i < ctx.expr().length; i++) {
+			params.push(this.visit(ctx.expr(i)));
 		}
+
+		const res = fn.value.value.evaluate(this, params);
+		return res;
 	}
 
 	visitReturnStmt(ctx: ReturnStmtContext) {
@@ -58,22 +61,6 @@ export class EvalVisitor extends defaultEval.EvalVisitor {
 
 	visitTryCatchStmt(ctx: TryCatchStmtContext) {
 		throw new Error('try/catch not authorized yet');
-	}
-
-	visitRaiseExpr(ctx: RaiseExprContext): CourantLabeledValue {
-		throw new Error('raise not authroized yet');
-	}
-
-	visitFunctionDeclExpr(ctx: FunctionDeclExprContext): CourantLabeledValue {
-		throw new Error('functions not authorized yet');
-	}
-
-	visitFunctionCallExpr(ctx: FunctionCallExprContext): CourantLabeledValue {
-		throw new Error('functions not authorized yet');
-	}
-
-	visitFunctionBody(ctx: FunctionBodyContext): CourantLabeledValue {
-		throw new Error('functions not authorized yet');
 	}
 }
 
