@@ -15,18 +15,16 @@ import type { CourantLabeledValue } from '$lib/courant/types';
 
 // Custom visitor to evaluate program
 export class EvalVisitor extends defaultEval.EvalVisitor {
-	visitReturnStmt(ctx: ReturnStmtContext) {
-		let val: CourantLabeledValue = this.visit(ctx.expr());
-		// Throw used for control flow... not good but easy
-		throw new defaultEval.InternalReturn(val);
-	}
-
 	visitThrowStmt(ctx: ThrowStmtContext) {
-		throw new Error('throw not authorized yet');
-	}
-
-	visitTryCatchStmt(ctx: TryCatchStmtContext) {
-		throw new Error('try/catch not authorized yet');
+		let val: CourantLabeledValue = this.visit(ctx.expr());
+		// Throwing inside a pc should throw a value of label > pc
+		let newLabel = this.pc.currentContext.union(val.label);
+		let newValue = {
+			label: newLabel,
+			value: val.value
+		};
+		// Throw used for control flow... not good but easy
+		throw new defaultEval.InternalThrow(newValue, this.pc.currentContext);
 	}
 }
 

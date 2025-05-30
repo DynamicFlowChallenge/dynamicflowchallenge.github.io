@@ -5,7 +5,7 @@
 	import { Prec } from '@codemirror/state';
 	import { javascript } from '@codemirror/lang-javascript';
 	import * as Resizable from '$lib/components/ui/resizable';
-	import { Button } from '$lib/components/ui/button';
+	import { Button, buttonVariants } from '$lib/components/ui/button';
 	import { mode } from 'mode-watcher';
 	import ChallengeList from '$lib/components/ChallengeList.svelte';
 	import dracula from '$lib/dracula';
@@ -114,26 +114,49 @@
 			</Resizable.Pane>
 			<Resizable.Handle />
 			<Resizable.Pane>
-				<div class="border-border flex h-12 items-center border-t px-5">
-					{#if processing}
-						<span class="text-primary">
-							<Spinner />
-						</span>
-					{:else}
-						<Button
-							variant="ghost"
-							onclick={onSubmit}
-							size="icon"
-							class="text-green-400 hover:cursor-pointer"
-						>
-							<Play />
-						</Button>
+				<div class="border-border flex flex h-12 items-center justify-between border-t px-5">
+					<div>
+						{#if processing}
+							<span class="text-primary">
+								<Spinner />
+							</span>
+						{:else}
+							<Button
+								variant="ghost"
+								onclick={onSubmit}
+								size="icon"
+								class="text-green-400 hover:cursor-pointer"
+							>
+								<Play />
+							</Button>
+						{/if}
+					</div>
+					{#if $progressStore.includes(currentChallenge)}
+						<Dialog.Root>
+							<Dialog.Trigger class={[buttonVariants({ variant: 'ghost' }), 'cursor-pointer']}
+								>Reset challenge</Dialog.Trigger
+							>
+							<Dialog.Content>
+								<Dialog.Title>Are you sure ?</Dialog.Title>
+								<Dialog.Description
+									>This will reset you progress on this challenge</Dialog.Description
+								>
+								<div class="flex justify-end gap-10">
+									<Dialog.Close class="cursor-pointer">Cancel</Dialog.Close>
+									<Button
+										onclick={() => progressStore.resetChallenge(currentChallenge)}
+										variant="destructive"
+										class="cursor-pointer">Yes</Button
+									>
+								</div>
+							</Dialog.Content>
+						</Dialog.Root>
 					{/if}
 				</div>
 				<div class="border-border text-primary border-t p-5">
 					<h1 class="mb-5 text-xl font-bold">Results</h1>
 					<p>
-						{errorMessage}
+						{@html errorMessage}
 					</p>
 				</div>
 			</Resizable.Pane>

@@ -1,10 +1,10 @@
 <script lang="ts">
-	import Worker from '$lib/five/worker?worker';
+	import Worker from '$lib/six/worker?worker';
 	import Challenge from '$lib/components/Challenge.svelte';
 </script>
 
-<Challenge currentChallenge="five" nextChallenge="six" WorkerClass={Worker}>
-	<h1 class="py-3 text-xl font-bold">Challenge 5</h1>
+<Challenge currentChallenge="six" nextChallenge="sandbox" WorkerClass={Worker}>
+	<h1 class="py-3 text-xl font-bold">Challenge 6</h1>
 
 	<h3 class="py-5 font-bold">Goal</h3>
 
@@ -13,20 +13,29 @@
 		<code class="bg-secondary rounded-sm px-2">h</code> into
 		<code class="bg-secondary rounded-sm px-2">l</code>.
 	</p>
-	<p>In this challenge, the monitor is stronger, but you are now allowed to create functions.</p>
+	<p>
+		The now handles functions properly. We introduce a new constructs : exceptions and try/catch
+		blocks.
+	</p>
 
 	<h3 class="py-5 font-bold">Monitor rules</h3>
 
 	<p>
-		The body of a function is now executed in a high program context if the function itself has
-		label high.
+		The catch block of the try/catch block is ran under the same program context as the program
+		context where the exception was thrown.
+	</p>
+	<p>
+		The thrown value has a label at least as high as the PC where it is thrown, but could be higher
+		(example by throwing value from a high variable in a low context).
 	</p>
 
 	<h3 class="py-5 font-bold">Language grammar</h3>
 
 	<p>
-		Now <span class="font-bold">arrow functions</span> can also have any arbitrary body and use
-		<code class="bg-secondary rounded-sm px-2">return</code> keyword.
+		We add the <code class="bg-secondary rounded-sm px-2">throw</code> keyword to throw a value,
+		this value can be caught with a <code class="bg-secondary rounded-sm px-2">try</code>/<code
+			class="bg-secondary rounded-sm px-2">catch</code
+		> block.
 	</p>
 
 	<pre class="bg-secondary my-5 overflow-x-auto rounded-sm p-3 text-sm">{`<prog> ::= <stmts>
@@ -37,15 +46,15 @@
 		| if ( <expr> ) <stmt>              (if statement)
 		| if ( <expr> ) <stmt> else <stmt>  (if / else if / else)
 		| while ( <expr> ) stmt             (while loop)
-
-		| return <expr>;
+		| return <expr>;                    (return value)
+		
+		| throw <expr>;                     (throw exception)
+		| try <stmt> catch (<ident>) <stmt> (try/catch block)
 
 <expr> ::= <num> | <boolean>               (literals)
 		| <ident>                          (variable)
 		| ( <expr> )                       (parentheses)
-		
 		| ( <ident>* ) => <function_body>  (arrow function)
-		
 		| raise (<expr>)                   (raise <expr> lo label high)
 		| <expr>(<expr>*)                  (function call)
 		| <expr> <binop> <expr>            (binary operation)

@@ -27,6 +27,18 @@ function createProgressStore() {
 				return current;
 			});
 		},
+		resetChallenge: (challenge: string) => {
+			store.update((current) => {
+				const i = current.indexOf(challenge);
+				if (i != -1) {
+					const newProgress = [...current];
+					newProgress.splice(i, 1);
+					window.localStorage.setItem(PROGRESS_KEY, JSON.stringify(current));
+					return newProgress;
+				}
+				return current;
+			});
+		},
 		reset: () => {
 			window.localStorage.removeItem(PROGRESS_KEY);
 			store.set([]);
@@ -45,7 +57,7 @@ export const firstChallengeNotCompleted = derived(store, ($store) => {
 			return challenge;
 		}
 	}
-	return 'win';
+	return 'sandbox';
 });
 
 export const hasChallengesProgress = derived(store, ($store) => {

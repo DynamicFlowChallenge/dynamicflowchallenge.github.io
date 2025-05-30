@@ -1,33 +1,37 @@
 <script lang="ts">
-	import Worker from '$lib/five/worker?worker';
+	import Worker from '$lib/sandbox/worker?worker';
 	import Challenge from '$lib/components/Challenge.svelte';
 </script>
 
-<Challenge currentChallenge="five" nextChallenge="six" WorkerClass={Worker}>
-	<h1 class="py-3 text-xl font-bold">Challenge 5</h1>
+<Challenge currentChallenge="sandbox" nextChallenge="sandbox" WorkerClass={Worker}>
+	<h1 class="py-3 text-xl font-bold">Sandbox</h1>
+
+	Well done ! You have completed all the challenges ! We hope you better understand how dynamic
+	information flow control works and its challenges. But there still is one final challenge : find a
+	bug in our code !
 
 	<h3 class="py-5 font-bold">Goal</h3>
-
 	<p>
-		For this challenge, the goal is still to copy the value of
-		<code class="bg-secondary rounded-sm px-2">h</code> into
+		Like for the other challenges, <code class="bg-secondary rounded-sm px-2">h</code> contains a
+		boolean value of label high, the goal is to leak this value in
 		<code class="bg-secondary rounded-sm px-2">l</code>.
 	</p>
-	<p>In this challenge, the monitor is stronger, but you are now allowed to create functions.</p>
+
+	<p>
+		In this sandbox, you have all the language features at your disposal and all the monitor rules
+		are active. There is theoretically no way to leak data, but a bug or logic error that leads to
+		leaking data could still be present in Courant.
+	</p>
 
 	<h3 class="py-5 font-bold">Monitor rules</h3>
 
 	<p>
-		The body of a function is now executed in a high program context if the function itself has
-		label high.
+		There is now an exception label. Similar to the return label, throwing in a context higher that
+		the current exception label is forbidden. The exception label is set to the current program
+		context when you enter a try/catch block.
 	</p>
 
 	<h3 class="py-5 font-bold">Language grammar</h3>
-
-	<p>
-		Now <span class="font-bold">arrow functions</span> can also have any arbitrary body and use
-		<code class="bg-secondary rounded-sm px-2">return</code> keyword.
-	</p>
 
 	<pre class="bg-secondary my-5 overflow-x-auto rounded-sm p-3 text-sm">{`<prog> ::= <stmts>
 <stmts> ::= <stmt> <stmts> | {empty}
@@ -37,15 +41,14 @@
 		| if ( <expr> ) <stmt>              (if statement)
 		| if ( <expr> ) <stmt> else <stmt>  (if / else if / else)
 		| while ( <expr> ) stmt             (while loop)
-
-		| return <expr>;
+		| return <expr>;                    (return value)		
+		| throw <expr>;                     (throw exception)
+		| try <stmt> catch (<ident>) <stmt> (try/catch block)
 
 <expr> ::= <num> | <boolean>               (literals)
 		| <ident>                          (variable)
 		| ( <expr> )                       (parentheses)
-		
 		| ( <ident>* ) => <function_body>  (arrow function)
-		
 		| raise (<expr>)                   (raise <expr> lo label high)
 		| <expr>(<expr>*)                  (function call)
 		| <expr> <binop> <expr>            (binary operation)
