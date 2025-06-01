@@ -21,12 +21,7 @@
 	<h3 class="py-5 font-bold">Monitor rules</h3>
 
 	<p>
-		The catch block of the try/catch block is ran under the same program context as the program
-		context where the exception was thrown.
-	</p>
-	<p>
-		The thrown value has a label at least as high as the PC where it is thrown, but could be higher
-		(example by throwing value from a high variable in a low context).
+		The value thrown keeps its label in the catch block.
 	</p>
 
 	<h3 class="py-5 font-bold">Language grammar</h3>

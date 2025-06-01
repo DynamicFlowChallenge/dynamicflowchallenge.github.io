@@ -15,6 +15,32 @@ import type { CourantLabeledValue } from '$lib/courant/types';
 
 // Custom visitor to evaluate program
 export class EvalVisitor extends defaultEval.EvalVisitor {
+	visitTryCatchStmt(ctx: TryCatchStmtContext) {
+		try {
+			this.exceptionContext.pushLabel(this.pc.currentContext);
+			try {
+				this.visit(ctx.stmt(0));
+			} finally {
+				this.exceptionContext.popLabel();
+			}
+		} catch (e) {
+			if (e instanceof defaultEval.InternalThrow) {
+				// We create an implicit block to store the exception in even if there is no explicit block written in the code
+				this.memory.pushBlock();
+				this.memory.blocks[0].set(ctx.IDENT().text, e.value);
+				// The catch block should have the same pc as the throw
+				try {
+					this.visit(ctx.stmt(1));
+				} finally {
+					// A return or throw should close block
+					this.memory.popBlock();
+				}
+			} else {
+				throw e;
+			}
+		}
+	}
+
 	visitThrowStmt(ctx: ThrowStmtContext) {
 		let val: CourantLabeledValue = this.visit(ctx.expr());
 		// Throwing inside a pc should throw a value of label > pc
