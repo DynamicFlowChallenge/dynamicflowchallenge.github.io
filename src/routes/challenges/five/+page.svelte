@@ -1,6 +1,19 @@
 <script lang="ts">
 	import Worker from '$lib/five/worker?worker';
 	import Challenge from '$lib/components/Challenge.svelte';
+	import * as Accordion from '$lib/components/ui/accordion/index.js';
+	import Assign from '$lib/components/rules/Assign.svelte';
+	import BinOp from '$lib/components/rules/BinOp.svelte';
+	import FunctionCall from '$lib/components/rules/FunctionCall.svelte';
+	import Ident from '$lib/components/rules/Ident.svelte';
+	import IfFalse from '$lib/components/rules/IfFalse.svelte';
+	import IfTrue from '$lib/components/rules/IfTrue.svelte';
+	import Literal from '$lib/components/rules/Literal.svelte';
+	import UnaryOp from '$lib/components/rules/UnaryOp.svelte';
+	import WhileFalse from '$lib/components/rules/WhileFalse.svelte';
+	import WhileTrue from '$lib/components/rules/WhileTrue.svelte';
+	import ReturnAltered from '$lib/components/rules/ReturnAltered.svelte';
+	import Raise from '$lib/components/rules/Raise.svelte';
 </script>
 
 <Challenge currentChallenge="five" nextChallenge="six" WorkerClass={Worker}>
@@ -21,6 +34,32 @@
 		The body of a function is now executed in a high program context if the function itself has
 		label high.
 	</p>
+
+	<div class="mx-5">
+		<Accordion.Root>
+			<Accordion.Item value="item-1">
+				<Accordion.Trigger>See all rules</Accordion.Trigger>
+				<Accordion.Content>
+					<div class="flex flex-col gap-5 overflow-x-auto overflow-y-hidden py-5">
+						<span class="text-alert">
+							<FunctionCall />
+							<ReturnAltered />
+						</span>
+						<Assign />
+						<IfTrue />
+						<IfFalse />
+						<WhileTrue />
+						<WhileFalse />
+						<BinOp />
+						<UnaryOp />
+						<Literal />
+						<Ident />
+						<Raise />
+					</div>
+				</Accordion.Content>
+			</Accordion.Item>
+		</Accordion.Root>
+	</div>
 
 	<h3 class="py-5 font-bold">Language grammar</h3>
 

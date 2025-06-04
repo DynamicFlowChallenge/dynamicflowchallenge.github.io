@@ -1,6 +1,22 @@
 <script lang="ts">
 	import Worker from '$lib/six/worker?worker';
 	import Challenge from '$lib/components/Challenge.svelte';
+	import * as Accordion from '$lib/components/ui/accordion/index.js';
+	import TryCatchExceptionAltered from '$lib/components/rules/TryCatchExceptionAltered.svelte';
+	import TryCatchNoException from '$lib/components/rules/TryCatchNoException.svelte';
+	import ThrowAltered from '$lib/components/rules/ThrowAltered.svelte';
+	import FunctionCall from '$lib/components/rules/FunctionCall.svelte';
+	import Assign from '$lib/components/rules/Assign.svelte';
+	import BinOp from '$lib/components/rules/BinOp.svelte';
+	import Ident from '$lib/components/rules/Ident.svelte';
+	import IfFalse from '$lib/components/rules/IfFalse.svelte';
+	import IfTrue from '$lib/components/rules/IfTrue.svelte';
+	import Literal from '$lib/components/rules/Literal.svelte';
+	import Return from '$lib/components/rules/Return.svelte';
+	import UnaryOp from '$lib/components/rules/UnaryOp.svelte';
+	import WhileFalse from '$lib/components/rules/WhileFalse.svelte';
+	import WhileTrue from '$lib/components/rules/WhileTrue.svelte';
+	import Raise from '$lib/components/rules/Raise.svelte';
 </script>
 
 <Challenge currentChallenge="six" nextChallenge="sandbox" WorkerClass={Worker}>
@@ -21,8 +37,45 @@
 	<h3 class="py-5 font-bold">Monitor rules</h3>
 
 	<p>
-		The value thrown keeps its label in the catch block.
+		We introduce the return label, when you call a funciton, the return label in initialized to the
+		pc. When you return, you must be in a context that is lower or equal that the return context.
 	</p>
+	<p>
+		When you use the <code class="bg-secondary rounded-sm px-2">throw</code> keyword in a
+		<code class="bg-secondary rounded-sm px-2">try/catch</code> block, the value thrown keeps its label
+		in the catch block.
+	</p>
+
+	<div class="mx-5">
+		<Accordion.Root>
+			<Accordion.Item value="item-1">
+				<Accordion.Trigger>See all rules</Accordion.Trigger>
+				<Accordion.Content>
+					<div class="flex flex-col gap-5 overflow-x-auto overflow-y-hidden py-5">
+						<span class="text-alert">
+							<TryCatchExceptionAltered />
+							<TryCatchNoException />
+							<ThrowAltered />
+						</span>
+						<FunctionCall />
+						<span class="text-alert">
+							<Return />
+						</span>
+						<Assign />
+						<IfTrue />
+						<IfFalse />
+						<WhileTrue />
+						<WhileFalse />
+						<BinOp />
+						<UnaryOp />
+						<Literal />
+						<Ident />
+						<Raise />
+					</div>
+				</Accordion.Content>
+			</Accordion.Item>
+		</Accordion.Root>
+	</div>
 
 	<h3 class="py-5 font-bold">Language grammar</h3>
 

@@ -1,6 +1,18 @@
 <script lang="ts">
 	import Worker from '$lib/four/worker?worker';
 	import Challenge from '$lib/components/Challenge.svelte';
+	import * as Accordion from '$lib/components/ui/accordion/index.js';
+	import BinOp from '$lib/components/rules/BinOp.svelte';
+	import Ident from '$lib/components/rules/Ident.svelte';
+	import IfFalse from '$lib/components/rules/IfFalse.svelte';
+	import IfTrue from '$lib/components/rules/IfTrue.svelte';
+	import Literal from '$lib/components/rules/Literal.svelte';
+	import UnaryOp from '$lib/components/rules/UnaryOp.svelte';
+	import WhileFalse from '$lib/components/rules/WhileFalse.svelte';
+	import WhileTrue from '$lib/components/rules/WhileTrue.svelte';
+	import Assign from '$lib/components/rules/Assign.svelte';
+	import FunctionCallAltered from '$lib/components/rules/FunctionCallAltered.svelte';
+	import Raise from '$lib/components/rules/Raise.svelte';
 </script>
 
 <Challenge currentChallenge="four" nextChallenge="five" WorkerClass={Worker}>
@@ -21,6 +33,39 @@
 		The monitor now enforces the <span class="font-bold">No sensitive upgrade</span> policy, meaning
 		that a variable cannot be assigned to if its label is lower than the top of the Program Context stack.
 	</p>
+
+	<p>
+		<code class="bg-secondary rounded-sm px-2">raise</code> takes a value end returns the same value
+		with lable high.
+	</p>
+
+	<div class="mx-5">
+		<Accordion.Root>
+			<Accordion.Item value="item-1">
+				<Accordion.Trigger>See all rules</Accordion.Trigger>
+				<Accordion.Content>
+					<div class="flex flex-col gap-5 overflow-x-auto overflow-y-hidden py-5">
+						<span class="text-alert">
+							<FunctionCallAltered />
+						</span>
+						<Assign />
+						<IfTrue />
+						<IfFalse />
+						<WhileTrue />
+						<WhileFalse />
+						<BinOp />
+						<UnaryOp />
+						<Literal />
+						<Ident />
+						<span class="text-altered">
+							<Raise />
+						</span>
+					</div>
+				</Accordion.Content>
+			</Accordion.Item>
+		</Accordion.Root>
+	</div>
+
 	<h3 class="py-5 font-bold">Language grammar</h3>
 
 	<p>

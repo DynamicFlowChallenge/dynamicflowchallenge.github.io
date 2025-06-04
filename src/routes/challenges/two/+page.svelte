@@ -1,6 +1,12 @@
 <script lang="ts">
 	import Worker from '$lib/two/worker?worker';
 	import Challenge from '$lib/components/Challenge.svelte';
+	import * as Accordion from '$lib/components/ui/accordion/index.js';
+	import BinOp from '$lib/components/rules/BinOp.svelte';
+	import UnaryOp from '$lib/components/rules/UnaryOp.svelte';
+	import Ident from '$lib/components/rules/Ident.svelte';
+	import Literal from '$lib/components/rules/Literal.svelte';
+	import AssignAltered from '$lib/components/rules/AssignAltered.svelte';
 </script>
 
 <Challenge currentChallenge="two" nextChallenge="three" WorkerClass={Worker}>
@@ -36,6 +42,24 @@
 		Literal values like <code class="bg-secondary rounded-sm px-2">true</code> always have label
 		<code class="bg-secondary rounded-sm px-2">low</code>.
 	</p>
+
+	<div class="mx-5">
+		<Accordion.Root>
+			<Accordion.Item value="item-1">
+				<Accordion.Trigger>See all rules</Accordion.Trigger>
+				<Accordion.Content>
+					<div class="flex flex-col gap-5">
+						<AssignAltered />
+						<BinOp />
+						<UnaryOp />
+						<Literal />
+						<Ident />
+					</div>
+				</Accordion.Content>
+			</Accordion.Item>
+		</Accordion.Root>
+	</div>
+
 	<h3 class="py-5 font-bold">Language grammar</h3>
 
 	<pre class="bg-secondary mb-5 overflow-x-auto rounded-sm p-3 text-sm">{`<prog> ::= <stmts>

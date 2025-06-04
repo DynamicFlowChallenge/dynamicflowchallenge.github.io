@@ -1,6 +1,16 @@
 <script lang="ts">
 	import Worker from '$lib/three/worker?worker';
 	import Challenge from '$lib/components/Challenge.svelte';
+	import BinOp from '$lib/components/rules/BinOp.svelte';
+	import Ident from '$lib/components/rules/Ident.svelte';
+	import Literal from '$lib/components/rules/Literal.svelte';
+	import UnaryOp from '$lib/components/rules/UnaryOp.svelte';
+	import AssignAltered from '$lib/components/rules/AssignAltered.svelte';
+	import * as Accordion from '$lib/components/ui/accordion/index.js';
+	import IfFalse from '$lib/components/rules/IfFalse.svelte';
+	import IfTrue from '$lib/components/rules/IfTrue.svelte';
+	import WhileFalse from '$lib/components/rules/WhileFalse.svelte';
+	import WhileTrue from '$lib/components/rules/WhileTrue.svelte';
 </script>
 
 <Challenge currentChallenge="three" nextChallenge="four" WorkerClass={Worker}>
@@ -30,6 +40,30 @@
 		This means that an assignment in an if block whose condition is high now results in the label of
 		the variable being assigned to being high.
 	</p>
+
+	<div class="mx-5">
+		<Accordion.Root>
+			<Accordion.Item value="item-1">
+				<Accordion.Trigger>See all rules</Accordion.Trigger>
+				<Accordion.Content>
+					<div class="flex flex-col gap-5 overflow-x-auto overflow-y-hidden py-5">
+						<AssignAltered />
+						<span class="text-alert">
+							<IfTrue />
+							<IfFalse />
+							<WhileTrue />
+							<WhileFalse />
+						</span>
+						<BinOp />
+						<UnaryOp />
+						<Literal />
+						<Ident />
+					</div>
+				</Accordion.Content>
+			</Accordion.Item>
+		</Accordion.Root>
+	</div>
+
 	<h3 class="py-5 font-bold">Language grammar</h3>
 
 	<pre class="bg-secondary mb-5 overflow-x-auto rounded-sm p-3 text-sm">{`<prog> ::= <stmts>
