@@ -8,6 +8,7 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 	import * as Dialog from '$lib/components/ui/dialog';
+	import Challenge from '$lib/components/Challenge.svelte';
 
 	let aboutOpen = $state(false);
 
@@ -29,6 +30,14 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Dynamic Flow Challenge</title>
+	<meta
+		name="description"
+		content="The Dynamic Flow challenge, a series of coding challenges to introduce you to dynamic information flow control."
+	/>
+</svelte:head>
+
 <div class="flex h-full flex-row items-stretch">
 	<div class="bg-background flex flex h-full w-1/3 flex-col items-center items-center gap-20 p-50">
 		<h1 class="text-center text-5xl font-bold">Dynamic Flow Challenge</h1>
@@ -38,11 +47,11 @@
 			{:else}
 				<Button href="#about" variant="outline" onclick={smoothScroll}>About</Button>
 			{/if}
-			<Button href={`challenges/${$firstChallengeNotCompleted}`}>
+			<Button href={`challenges/${$firstChallengeNotCompleted}` }>
 				{#if $hasChallengesProgress}
 					Continue
 				{:else}
-					Start
+					Start the challenge
 				{/if}
 			</Button>
 		</div>
@@ -87,7 +96,7 @@
 					{#if $hasChallengesProgress}
 						Continue
 					{:else}
-						Start
+						Start the challenge
 					{/if}
 				</Button>
 				<Button href="#top" variant="outline" onclick={smoothScroll}>Back</Button>

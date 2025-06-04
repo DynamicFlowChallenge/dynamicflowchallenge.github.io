@@ -3,6 +3,10 @@
 	import Challenge from '$lib/components/Challenge.svelte';
 </script>
 
+<svelte:head>
+	<title>DFC Challenge 1</title>
+</svelte:head>
+
 <Challenge currentChallenge="one" nextChallenge="two" WorkerClass={Worker}>
 	<h1 class="py-3 text-xl font-bold">Challenge 1</h1>
 

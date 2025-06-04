@@ -6,7 +6,6 @@
 	let { currentChallenge, challenges } = $props();
 
 	const progress = $derived($progressStore);
-	progressStore.subscribe((val) => console.log(val));
 </script>
 
 <div class="flex flex-col items-start gap-2 px-2 py-5">

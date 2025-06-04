@@ -19,6 +19,10 @@
 	import Raise from '$lib/components/rules/Raise.svelte';
 </script>
 
+<svelte:head>
+	<title>DFC Challenge 6</title>
+</svelte:head>
+
 <Challenge currentChallenge="six" nextChallenge="sandbox" WorkerClass={Worker}>
 	<h1 class="py-3 text-xl font-bold">Challenge 6</h1>
 

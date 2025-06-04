@@ -13,6 +13,10 @@
 	import WhileTrue from '$lib/components/rules/WhileTrue.svelte';
 </script>
 
+<svelte:head>
+	<title>DFC Challenge 3</title>
+</svelte:head>
+
 <Challenge currentChallenge="three" nextChallenge="four" WorkerClass={Worker}>
 	<h1 class="py-3 text-xl font-bold">Challenge 3</h1>
 

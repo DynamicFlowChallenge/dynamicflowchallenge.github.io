@@ -1,20 +1,22 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		%sveltekit.head%
-	</head>
 
-	<body data-sveltekit-preload-data="hover" class="bg-background h-screen">
-		<div class="flex h-full flex-col">
-			<nav class="bg-background border-border align-center flex h-10 justify-center border-b">
-				<a class="text-primary flex items-center justify-center align-middle font-bold" href="/">
-					<h1>Dynamic Flow Challenge</h1>
-				</a>
-			</nav>
-			<div class="flex-1 overflow-hidden">%sveltekit.body%</div>
-		</div>
-	</body>
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" href="%sveltekit.assets%/favicon.svg" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	%sveltekit.head%
+</head>
+
+<body data-sveltekit-preload-data="hover" class="bg-background h-screen">
+	<div class="flex h-full flex-col">
+		<nav class="bg-background border-border align-center flex h-10 justify-center border-b">
+			<a class="text-primary flex items-center justify-center align-middle font-bold" href="/">
+				<h1>Dynamic Flow Challenge</h1>
+			</a>
+		</nav>
+		<div class="flex-1 overflow-hidden">%sveltekit.body%</div>
+	</div>
+</body>
+
 </html>
