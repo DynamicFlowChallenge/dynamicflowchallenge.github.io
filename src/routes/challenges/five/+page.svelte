@@ -69,7 +69,7 @@
 
 	<p>
 		Now <span class="font-bold">arrow functions</span> can also have any arbitrary body and use
-		<code class="bg-secondary rounded-sm px-2">return</code> keyword.
+		the <code class="bg-secondary rounded-sm px-2">return</code> keyword.
 	</p>
 
 	<pre class="bg-secondary my-5 overflow-x-auto rounded-sm p-3 text-sm">{`<prog> ::= <stmts>
@@ -109,6 +109,6 @@
 		<code class="bg-secondary rounded-sm px-2">false</code>.
 	</p>
 	<p>Operator priority is the same as C.</p>
-	<p>Note and 'and' and 'or' operators are not lazy, they will always evaluate both operands.</p>
+	<p>Note that 'and' and 'or' operators are not lazy, they will always evaluate both operands.</p>
 	<p>Variables are tied to the scope they are first defined in.</p>
 </Challenge>

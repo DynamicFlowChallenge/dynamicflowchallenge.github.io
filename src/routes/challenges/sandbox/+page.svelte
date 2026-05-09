@@ -121,6 +121,6 @@
 		<code class="bg-secondary rounded-sm px-2">false</code>.
 	</p>
 	<p>Operator priority is the same as C.</p>
-	<p>Note and 'and' and 'or' operators are not lazy, they will always evaluate both operands.</p>
+	<p>Note that 'and' and 'or' operators are not lazy, they will always evaluate both operands.</p>
 	<p>Variables are tied to the scope they are first defined in.</p>
 </Challenge>

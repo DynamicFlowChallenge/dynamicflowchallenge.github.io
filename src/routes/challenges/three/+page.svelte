@@ -36,7 +36,7 @@
 
 	<p>
 		We introduce the <span class="font-bold">Program Context</span>, each time we enter a
-		conditional block (from a if/else or a while) we push the label of the value we're branching on
+		conditional block (from an if/else or a while) we push the label of the value we're branching on
 		to the Program Context stack. All assignments will now result in the variable having the union
 		of the top of the program context with the value we're assigning.
 	</p>
@@ -94,6 +94,6 @@
 		<code class="bg-secondary rounded-sm px-2">false</code>.
 	</p>
 	<p>Operator priority is the same as C.</p>
-	<p>Note and 'and' and 'or' operators are not lazy, they will always evaluate both operands.</p>
+	<p>Note that 'and' and 'or' operators are not lazy, they will always evaluate both operands.</p>
 	<p>Variables are tied to the scope they are first defined in.</p>
 </Challenge>

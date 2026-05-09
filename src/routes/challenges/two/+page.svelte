@@ -27,7 +27,7 @@
 		This time, each variable in the program holds not only a value, but also a security label <code
 			class="bg-secondary rounded-sm px-2">high</code
 		>
-		or <code class="bg-secondary rounded-sm px-2">low</code> .
+		or <code class="bg-secondary rounded-sm px-2">low</code>.
 		<code class="bg-secondary rounded-sm px-2">h</code>
 		has label <code class="bg-secondary rounded-sm px-2">high</code>, the goal is to have
 		<code class="bg-secondary rounded-sm px-2">l</code>
@@ -90,6 +90,6 @@
 		<code class="bg-secondary rounded-sm px-2">false</code>.
 	</p>
 	<p>Operator priority is the same as C.</p>
-	<p>Note and 'and' and 'or' operators are not lazy, they will always evaluate both operands.</p>
+	<p>Note that 'and' and 'or' operators are not lazy, they will always evaluate both operands.</p>
 	<p>Variables are tied to the scope they are first defined in.</p>
 </Challenge>

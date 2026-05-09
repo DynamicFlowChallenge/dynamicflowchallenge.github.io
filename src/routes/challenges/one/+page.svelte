@@ -13,17 +13,17 @@
 	<h3 class="py-5 font-bold">Goal</h3>
 
 	<p>
-		Through all the following challenges, the goal will always be the same : copy the value of the
+		Through all the following challenges, the goal will always be the same: copy the value of the
 		boolean variable <code class="bg-secondary rounded-sm px-2">h</code> into the boolean variable
 		<code class="bg-secondary rounded-sm px-2">l</code>.
 	</p>
 	<p>
-		You'll be using different variations of the Courant programming language, this is is dynamically
+		You'll be using different variations of the Courant programming language, it is a dynamically
 		typed programming language with a syntax close to JavaScript
 	</p>
 
 	<p>
-		In the version for this first challenge, you can assign variables to one an other, and use basic
+		In the version for this first challenge, you can assign variables to one another, and use basic
 		constructs like conditionals and while loops
 	</p>
 
@@ -57,6 +57,6 @@
 		<code class="bg-secondary rounded-sm px-2">false</code>.
 	</p>
 	<p>Operator priority is the same as C.</p>
-	<p>Note and 'and' and 'or' operators are not lazy, they will always evaluate both operands.</p>
+	<p>Note that 'and' and 'or' operators are not lazy, they will always evaluate both operands.</p>
 	<p>Variables are tied to the scope they are first defined in.</p>
 </Challenge>

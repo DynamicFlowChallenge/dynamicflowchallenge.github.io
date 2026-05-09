@@ -34,15 +34,15 @@
 		<code class="bg-secondary rounded-sm px-2">l</code>.
 	</p>
 	<p>
-		The now handles functions properly. We introduce a new constructs : exceptions and try/catch
+		The language now handles functions properly. We introduce new constructs: exceptions and try/catch
 		blocks.
 	</p>
 
 	<h3 class="py-5 font-bold">Monitor rules</h3>
 
 	<p>
-		We introduce the return label, when you call a funciton, the return label in initialized to the
-		pc. When you return, you must be in a context that is lower or equal that the return context.
+		We introduce the return label; when you call a function, the return label is initialized to the
+		pc. When you return, you must be in a context that is lower than or equal to the return context.
 	</p>
 	<p>
 		When you use the <code class="bg-secondary rounded-sm px-2">throw</code> keyword in a
@@ -127,6 +127,6 @@
 		<code class="bg-secondary rounded-sm px-2">false</code>.
 	</p>
 	<p>Operator priority is the same as C.</p>
-	<p>Note and 'and' and 'or' operators are not lazy, they will always evaluate both operands.</p>
+	<p>Note that 'and' and 'or' operators are not lazy, they will always evaluate both operands.</p>
 	<p>Variables are tied to the scope they are first defined in.</p>
 </Challenge>

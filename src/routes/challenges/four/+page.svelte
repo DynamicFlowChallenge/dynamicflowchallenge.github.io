@@ -39,8 +39,8 @@
 	</p>
 
 	<p>
-		<code class="bg-secondary rounded-sm px-2">raise</code> takes a value end returns the same value
-		with lable high.
+		<code class="bg-secondary rounded-sm px-2">raise</code> takes a value and returns the same value
+		with label high.
 	</p>
 
 	<div class="mx-5">
@@ -73,12 +73,12 @@
 	<h3 class="py-5 font-bold">Language grammar</h3>
 
 	<p>
-		We add <span class="font-bold">arrow functions</span> to the language. They work wimilarly to JS,
+		We add <span class="font-bold">arrow functions</span> to the language. They work similarly to JS,
 		but you are restricted to the body being a single expression.
 	</p>
 	<p>
-		We add the <code class="bg-secondary rounded-sm px-2">raise</code> function that return the value
-		passed as parameter with label high.
+		We add the <code class="bg-secondary rounded-sm px-2">raise</code> function that returns the value
+		passed as a parameter with label high.
 	</p>
 
 	<pre class="bg-secondary my-5 overflow-x-auto rounded-sm p-3 text-sm">{`<prog> ::= <stmts>
@@ -114,6 +114,6 @@
 		<code class="bg-secondary rounded-sm px-2">false</code>.
 	</p>
 	<p>Operator priority is the same as C.</p>
-	<p>Note and 'and' and 'or' operators are not lazy, they will always evaluate both operands.</p>
+	<p>Note that 'and' and 'or' operators are not lazy, they will always evaluate both operands.</p>
 	<p>Variables are tied to the scope they are first defined in.</p>
 </Challenge>

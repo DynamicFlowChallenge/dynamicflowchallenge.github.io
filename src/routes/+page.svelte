@@ -61,8 +61,8 @@
 					>Reset Progression</Dialog.Trigger
 				>
 				<Dialog.Content>
-					<Dialog.Title>Are you sure ?</Dialog.Title>
-					<Dialog.Description>You will loose all your progress</Dialog.Description>
+					<Dialog.Title>Are you sure?</Dialog.Title>
+					<Dialog.Description>You will lose all your progress</Dialog.Description>
 					<div class="flex justify-end gap-10">
 						<Dialog.Close class="cursor-pointer">Cancel</Dialog.Close>
 						<Button
@@ -75,19 +75,19 @@
 			</Dialog.Root>
 		{/if}
 	</div>
-	<div class="borber-border h-full w-full overflow-y-auto overflow-y-hidden border-l">
+	<div class="border-border h-full w-full overflow-y-auto overflow-y-hidden border-l">
 		<div id="top" class="noise h-full w-full"></div>
 		<div id="about" class="flex flex-col gap-5 p-20">
 			<h1 class="text-xl font-bold">About</h1>
 			<p>This website provides a series of challenges about Information Flow Control (IFC)</p>
 			<p>
 				You'll be presented with different challenges to try to leak information. The challenges use
-				a custom language named Courant. Its is a dynamically types language that implemen,ts a
+				a custom language named Courant. It is a dynamically typed language that implements a
 				runtime dynamic control flow monitor to prevent illegal information flows. The language has
 				a syntax similar to JavaScript with a few differences.
 			</p>
 			<p>
-				You'll be indroduced to different features as you advance in the challenges so you are
+				You'll be introduced to different features as you advance in the challenges so you are
 				encouraged to do the challenges in order for the best experience.
 			</p>
 			<p>This app also works offline.</p>
