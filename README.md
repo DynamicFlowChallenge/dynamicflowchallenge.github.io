@@ -8,10 +8,18 @@ This website uses SvelteKit and shadcn-svelte.
 
 Install the dependencies with `npm i`.
 
-You can generate the parser files with `npm run build:antlr` but at the moment those need no be
+You can generate the ANTLR parser files (for language execution) with `npm run build:antlr` but at the moment those need no be
 modified manually so they should be generated only once.
 
-You can then run the development server with `npm run dev`.
+### CodeMirror & Lezer Grammar
+
+The project uses a Lezer grammar for CodeMirror 6 syntax highlighting and autocompletion.
+
+Parser files can be generated from Lezer grammar with:
+
+```bash
+npx lezer-generator src/lib/courant-autocomplete/courant.grammar -o src/lib/courant-autocomplete/parser.ts --typeScript
+```
 
 ## Deploying
 

@@ -3,7 +3,7 @@
 	import { ayuLight } from 'thememirror';
 	import { EditorView, keymap } from '@codemirror/view';
 	import { Prec } from '@codemirror/state';
-	import { javascript } from '@codemirror/lang-javascript';
+	import { courant } from '$lib/courant-autocomplete/courant-lang';
 	import * as Resizable from '$lib/components/ui/resizable';
 	import { Button, buttonVariants } from '$lib/components/ui/button';
 	import { mode } from 'mode-watcher';
@@ -98,7 +98,7 @@
 					<CodeMirror
 						bind:value
 						{theme}
-						lang={javascript()}
+						lang={courant()}
 						extensions={[myKeyMap]}
 						styles={{
 							'&': {

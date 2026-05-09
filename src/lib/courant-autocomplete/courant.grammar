@@ -1,0 +1,75 @@
+@top Program { stmt* }
+
+stmt {
+  AssignStmt |
+  ExprStmt |
+  ReturnStmt |
+  BlockStmt |
+  IfStmt |
+  WhileStmt |
+  ThrowStmt |
+  TryCatchStmt
+}
+
+AssignStmt { Identifier "=" expr ";" }
+ExprStmt { expr ";" }
+ReturnStmt { kw<"return"> expr ";" }
+BlockStmt { "{" stmt* "}" }
+IfStmt { kw<"if"> "(" expr ")" stmt (!else kw<"else"> stmt)? }
+WhileStmt { kw<"while"> "(" expr ")" stmt }
+ThrowStmt { kw<"throw"> expr ";" }
+TryCatchStmt { kw<"try"> stmt kw<"catch"> "(" Identifier ")" stmt }
+
+expr {
+  Identifier |
+  Number |
+  Boolean |
+  "(" expr ")" |
+  RaiseExpr |
+  FunctionCall |
+  UnaryExpr |
+  BinaryExpr
+}
+
+Boolean { @specialize[@name=Boolean]<Identifier, "true" | "false"> }
+
+RaiseExpr { kw<"raise"> "(" expr ")" }
+FunctionCall { expr !call "(" (expr ("," expr)*)? ")" }
+
+UnaryExpr { (Plus | Minus | kw<"not">) expr }
+
+BinaryExpr {
+  expr !mul (Mul | Div) expr |
+  expr !add (Plus | Minus) expr |
+  expr !compare (CompareOp) expr |
+  expr !logic (kw<"and"> | kw<"or">) expr
+}
+
+CompareOp { "<" | "<=" | "==" | "!=" | ">" | ">=" }
+
+@skip { space | LineComment }
+
+@tokens {
+  space { $[ \t\n\r]+ }
+  LineComment { "#" ![\n]* }
+  Identifier { $[a-zA-Z_] $[a-zA-Z0-9_]* }
+  Number { $[0-9]+ ($[.] $[0-9]*)? }
+  Plus { "+" }
+  Minus { "-" }
+  Mul { "*" }
+  Div { "/" }
+  "(" ")" "{" "}" "[" "]" "," ";" "=>" "=" 
+}
+
+kw<word> { @specialize[@name={word}]<Identifier, word> }
+
+@precedence {
+  call @left,
+  mul @left,
+  add @left,
+  compare @left,
+  logic @left,
+  else @right
+}
+
+@external propSource courantHighlighting from "./highlight"
